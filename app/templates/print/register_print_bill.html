@@ -1,0 +1,133 @@
+{% load static %} {% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="{% static 'fix_a4.css' %}" />
+    <script src="{% static 'libs/thaibath/thaibath.js' %}"></script>
+    <script type="text/javascript">
+      function myFunction() {
+        var monney = document.getElementById("number").value;
+        var thaibath = ArabicNumberToText(monney);
+        document.getElementById("result").innerHTML = thaibath;
+      }
+    </script>
+  </head>
+  <body style="font-size: 14px" onLoad="myFunction();window.print()">
+    <input type="hidden" id="number" value="{{items.rpi_price_total }}" />
+    <div class="page">
+      <div align="center">
+        <p>
+          <img
+            src="{% static 'images/image004.png' %}"
+            alt="TZLOGO"
+            style="width: 100px; height: 100px"
+          />
+        </p>
+        <h3>ใบเสร็จรับเงิน</h3>
+        <p>Training Zenter (ศูนย์เทรนนิ่ง TZ เซ็นเตอร์)</p>
+        <p>
+          สาขา 00018 58/1 หมู่ 9 ถนนมิตรภาพ ตำบลทับกวาง อำเภอแก่งคอย
+          จังหวัดสระบุรี 18260
+        </p>
+        <p>Tax ID 0405536000531 Tel. 082-7513888 , 088-5643772</p>
+        <p>Email:id.trainingcenter@iddrives.co.th , idofficer@iddrives.co.th</p>
+        <p>www.trainingzenter.com www.iddrives.co.th www.iddriver.com</p>
+      </div>
+
+      <table style="width: 100%" border="0">
+        <tbody>
+          <tr>
+            <td style="width: 20%">ชื่อลูกค้า</td>
+            <td>{{data.rp_name_customer}}</td>
+            <td>รหัสลูกค้า :</td>
+            <td>{{data.rp_code_customer}}</td>
+          </tr>
+          <tr>
+            <td style="width: 20%">TAX ID :</td>
+            <td>{{data.rp_tax}}</td>
+            <td>ผู้เสนอขาย:</td>
+            <td>{{data.rp_name_seller}}</td>
+          </tr>
+          <tr>
+            <td>ชื่อผู้ติดต่อ :</td>
+            <td>{{data.rp_name_contact}}</td>
+            <td>ฝ่าย/สาขา:</td>
+            <td>{{data.rp_branch}}</td>
+          </tr>
+          <tr>
+            <td>ที่อยู่</td>
+            <td>{{data.rp_address}}</td>
+            <td>ยืนยันราคาภายใน(วัน) :</td>
+            <td>{{data.rp_confirm_date_price|date:"d/m/Y"}}</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              Tel : {{data.rp_phone}} , Email {{data.rp_email}}
+            </td>
+            <td>วันที่ส่งของ:</td>
+            <td>{{data.rp_date_delivery|date:"d/m/Y"}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="width: 100%; border-collapse: collapse" border="1">
+        <tbody>
+          <tr>
+            <th>ลำดับ</th>
+            <th>รหัสสินค้า</th>
+            <th>รายการสินค้า</th>
+            <th>จำนวน</th>
+            <th>หน่วย</th>
+            <th>ราคาต่อหน่วย</th>
+            <th>ส่วนลด</th>
+            <th>จำนวนเงิน</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>{{items.rpi_code}}</td>
+            <td>{{items.rpi_name}}</td>
+            <td align="center">{{items.rpi_quantity}}</td>
+            <td>{{items.rpi_unit}}</td>
+            <td align="right">{{items.rpi_price}}</td>
+            <td align="right">{{items.rpi_price_discount}}</td>
+            <td align="right">
+              {{items.rpi_price_total |floatformat:2|intcomma }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        จำนวนเงิน(ตัวอักษร)
+
+        <span id="result"></span>
+      </p>
+
+      <table style="width: 100%; border-collapse: collapse" border="1">
+        <tbody>
+          <tr align="center">
+            <td>
+              <br />
+              <br />
+
+              ..................................................
+
+              <p>ผู้จ่ายเงิน</p>
+              <p>วันที่........................................</p>
+            </td>
+            <td>
+              <br />
+              <br />
+              ..................................................
+              <p>ผู้รับเงิน</p>
+              <p>วันที่........................................</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
